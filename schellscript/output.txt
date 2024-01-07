@@ -1,0 +1,13 @@
+https.google.io
+https.udemy.io
+https.gmail.io
+https.facebook.io
+https.twitter.io
+https.yahoo.io
+https.youtube.io
+https.wikipedia.io
+https.amazon.io
+https.netflix.io
+https.instagram.io
+https.ubuntu.io
+https.microsoft.io

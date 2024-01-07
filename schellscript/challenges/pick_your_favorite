@@ -1,0 +1,30 @@
+#!/bin/bash
+
+set -o pipefail
+
+list=( "Margarita"  "Martini" "Old Fashioned" "Moscow Mule" "Piña Colada" "Negroni" "Mojito" "Exit" )
+
+PS3="What is your favorite cocktail? "
+
+select choice in "${list[@]}"
+do
+	case $choice in
+		"Margarita")	 echo "enjoy your Margarita"
+			;;
+		"Martini") 	 echo "enjoy your Martini"
+			;;
+		"Old Fashioned") echo "enjoy your Old Fashioned"
+			;;
+		"Moscow Mule")   echo "enjoy your Moscow Mule"
+			;;
+		"Piña Colada")   echo "enjoy your Piña Colada"
+			;;
+		"Negroni") 	 echo "enjoy your Negroni"
+			;;
+		"Mojito") 	 echo "enjoy your Mojito"
+			;;
+		"Exit") break
+			;;
+		*) 		 echo "Sorry, but that is not part of the list. Select within: "${list[@]}" "
+	esac
+done

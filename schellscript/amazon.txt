@@ -1,0 +1,13 @@
+HTTP/1.1 301 Moved Permanently
+Server: CloudFront
+Date: Mon, 06 Nov 2023 14:42:36 GMT
+Content-Type: text/html
+Content-Length: 167
+Connection: keep-alive
+Location: https://www.amazon.com/
+X-Cache: Redirect from cloudfront
+Via: 1.1 bd03106f662746adc3512ff682754ad0.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: CDG52-P1
+Alt-Svc: h3=":443"; ma=86400
+X-Amz-Cf-Id: 32A16uGVTQsyIRHA7zmcPK3Er3af-UZUYEZNJ92M3BMh3F30BUn2sA==
+

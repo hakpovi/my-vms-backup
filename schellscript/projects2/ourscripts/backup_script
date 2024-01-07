@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Author: Herve AKPOVI
+# Date created: 04/10/2023
+# Date Modified 05/10/2023
+
+# Description
+# This script will make a backup of files within our work directory 
+
+# Usage
+# backup_script
+
+echo "Hello, ${USER^} "
+
+currentdir=$(pwd)
+
+echo "I will now backup your home directory, $HOME"
+
+echo "You are running this script from $currentdir."
+
+echo "Therefore, I will save the backup in $currentdir."
+
+tar -cf "$currentdir/my_backup_$(date +%d-%m-%Y_%H-%M-%S)".tar $HOME/* 2>/dev/null
+
+echo "Backup Completed Successfully."
+
+exit 0
+
+
+
+
+

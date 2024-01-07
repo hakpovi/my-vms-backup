@@ -1,0 +1,12 @@
+--2023-11-10 00:42:56--  https://tse4.mm.bing.net/th?id=OIP.WiNWX1Ov-WyLE-K1QT92_QHaDh
+Resolving tse4.mm.bing.net (tse4.mm.bing.net)... 2620:1ec:c11::200, 13.107.21.200, 204.79.197.200
+Connecting to tse4.mm.bing.net (tse4.mm.bing.net)|2620:1ec:c11::200|:443... failed: Connection timed out.
+Connecting to tse4.mm.bing.net (tse4.mm.bing.net)|13.107.21.200|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 22229 (22K) [image/jpeg]
+Saving to: ‘th?id=OIP.WiNWX1Ov-WyLE-K1QT92_QHaDh.1.1’
+
+     0K .......... .......... .                               100% 8,45M=0,003s
+
+2023-11-10 00:45:06 (8,45 MB/s) - ‘th?id=OIP.WiNWX1Ov-WyLE-K1QT92_QHaDh.1.1’ saved [22229/22229]
+

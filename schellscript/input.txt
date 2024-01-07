@@ -1,0 +1,1 @@
+Input entered from a file or pipeline

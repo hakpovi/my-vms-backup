@@ -1,0 +1,20 @@
+#!/bin/bash
+
+set -o noclobber
+
+set -o pipefail
+
+
+
+# this script is used to display the directory contents. Remind that the directory must be in home directory before 
+
+repo=$(find ~ -type d -name "$1")
+
+ls -l $repo | awk ' {print $NF } ' 2> /dev/null 
+tree $repo
+
+if [[ ! -e $repo ]]
+ then
+	 echo "this file or directory doesn't exist. So you have to create before and run the script again"
+fi
+

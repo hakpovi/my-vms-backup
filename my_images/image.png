@@ -1,0 +1,12 @@
+--2023-11-10 01:13:41--  https://tse3.mm.bing.net/th?id=OIP.mDEkS6vquLxCN2O48vyOdgHaEK
+Resolving tse3.mm.bing.net (tse3.mm.bing.net)... 2620:1ec:c11::200, 13.107.21.200, 204.79.197.200
+Connecting to tse3.mm.bing.net (tse3.mm.bing.net)|2620:1ec:c11::200|:443... failed: Connection timed out.
+Connecting to tse3.mm.bing.net (tse3.mm.bing.net)|13.107.21.200|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 15297 (15K) [image/jpeg]
+Saving to: ‘th?id=OIP.mDEkS6vquLxCN2O48vyOdgHaEK’
+
+     0K .......... ....                                       100%  392M=0s
+
+2023-11-10 01:15:51 (392 MB/s) - ‘th?id=OIP.mDEkS6vquLxCN2O48vyOdgHaEK’ saved [15297/15297]
+

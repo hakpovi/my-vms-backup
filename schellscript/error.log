@@ -1,0 +1,22 @@
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: DB_CONN_FAILURE: Connection to database failed
+ERROR: INSUFFICIENT_PERMISSIONS: User admin does not have sufficient permissions
+ERROR: INSUFFICIENT_PERMISSIONS: User admin does not have sufficient permissions
+ERROR: INSUFFICIENT_PERMISSIONS: User user1 does not have sufficient permissions
+ERROR: INSUFFICIENT_PERMISSIONS: User user1 does not have sufficient permissions
+ERROR: INSUFFICIENT_PERMISSIONS: User user2 does not have sufficient permissions
+ERROR: MODULE_LOAD_FAILURE: Unable to load module ABC
+ERROR: MODULE_LOAD_FAILURE: Unable to load module ABC
+ERROR: MODULE_LOAD_FAILURE: Unable to load module ABC
+ERROR: MODULE_LOAD_FAILURE: Unable to load module DEF
+ERROR: MODULE_LOAD_FAILURE: Unable to load module DEF
+ERROR: MODULE_LOAD_FAILURE: Unable to load module XYZ
+ERROR: MODULE_LOAD_FAILURE: Unable to load module XYZ
+ERROR: MODULE_LOAD_FAILURE: Unable to load module XYZ
+ERROR: MODULE_LOAD_FAILURE: Unable to load module XYZ
+ERROR: MODULE_LOAD_FAILURE: Unable to load module XYZ

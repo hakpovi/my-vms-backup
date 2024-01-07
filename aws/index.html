@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample HTML Page with an Image</title>
+</head>
+<body>
+
+<h1>Welcome to My Devops Webpage</h1>
+<p>This is the profile of my devops webpage.</p>
+<p>feel free to stay as long as you want</p>
+
+<!-- Image inclusion -->
+<img src="devops-tools.png" alt="Description of the image">
+
+</body>
+
+<!>-- CORS demo -->
+<div id="tofetch"/>
+<script>
+    var tofetch = document.getElementById("tofetch");
+    
+    fecth('extra-page.html')
+    .then((response) => {
+	 return response.text();
+    })
+    .then((html) => {
+	 tofetch.innerHTML = html
+    });
+</script>
+
+</html>

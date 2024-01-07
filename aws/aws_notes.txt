@@ -1,0 +1,460 @@
+Getting stardted with AWS
+==========================
+
+we have many regions accross the world.
+Each region stands for a cluster of AZ (Availabity zone)
+
+Each AZ is a data center. So when we talk about Regions, it stands for a group of 
+AZ, all az connected with each other.
+
+you have two type of account: the root user account and the iam user account. 
+
+the holder of the root user account can manages the roles of standard users, like managing their access to the console. 
+
+IAM & AWS CLI
+=============
+
+IAM: Identity and Access Management. the IAM is the aws service which is used to create user account and assign them to a group
+and also manage their roles. It's important to notice that group only contents users, but not other groups. An user can belong to diffrents groups depending on the goals.
+when you create an account you can attach a tag to it, it will allow you either to group them by topic or other goal depending on your choice.
+
+    iam policies:
+the roles we create to manages users access is called, IAM PERSMISIONS also well known as iam policies. You can create your own iam policies and then assign them to users or group. in aws, iam policies 
+set permissions on resouces. It's like i'd like to set these actions on this specific resouces.
+so in summary, iam policies is json documents that defines a set of permissions for making requests to aws services, and can be used by iam users, groups, ans iam roles.
+
+services are linked to regions, but we might sometime have services at global scop.
+
+there is an ID associated to each root account, so when connected, we can find at the top right corner along the username the ID
+    iam roles:
+iam roles looks like iam policies but the difference right here is there are applied to services, not to physical users accounts. for instance, we can create an iam role for ec2.
+so in summary, an iam role is an entity that defines a set of permissions for making requests to AWS services, and will be used by an aws service.
+
+EC2:
+====
+
+bootstrating means launching commands when a machine starts 
+
+when you lounch an application troughout ec2 and you get some errors, it might 
+be related to some reasons:
+    - if your application is not accessible (time out), then it's a security group issue
+    - if your application gives a connection refused error, then it's an applicatioon error or it's not launched
+
+keep in mind that whenever you get a time either for http connection or for ssh it't relly important to double check the security group because it's 100% there is an issue related..
+
+classic ports to know:
+
+
+when connected to an instance using the connect mode from aws, it'a highly recommended  to not set our aws credeentials; otherwise anyone having a access to your ec2 can perfomr all actip
+22 = SSH (secure shell) - log into a linux instance
+21 = FTP (File Transfert Protocol) - uplpload files using SSH
+22 = SFPT (Secure File Transport Protocol) - upload files SSH
+80 = HTTP - access unsecured websites 
+443= HTTPS - access secured websites 
+3389 = RDP (Remote Desktop Protocol) - log insto Window instance 
+
+ 
+
+SSH Troubleshooting
+
+1) There's a connection timeout
+
+This is a security group issue. Any timeout (not just for SSH) is related to security groups or a firewall. Ensure your security group looks like this and correctly assigned to your EC2 instance.
+
+2) There's still a connection timeout issue
+
+If your security group is properly configured as above, and you still have connection timeout issues, then that means a corporate firewall or a personal firewall is blocking the connection. Please use EC2 Instance Connect as described in the next lecture.
+
+3) SSH does not work on Windows
+
+If it says: ssh command not found, that means you have to use Putty
+
+Follow again the video. If things don't work, please use EC2 Instance Connect as described in the next lecture
+4) There's a connection refused
+
+This means the instance is reachable, but no SSH utility is running on the instance
+
+Try to restart the instance
+
+If it doesn't work, terminate the instance and create a new one. Make sure you're using Amazon Linux 2
+
+5)  Permission denied (publickey,gssapi-keyex,gssapi-with-mic)
+
+This means either two things:
+
+You are using the wrong security key or not using a security key. Please look at your EC2 instance configuration to make sure you have assigned the correct key to it.
+
+You are using the wrong user. Make sure you have started an Amazon Linux 2 EC2 instance, and make sure you're using the user ec2-user. This is something you specify when doing ec2-user@<public-ip> (ex: ec2-user@35.180.242.162) in your SSH command or your Putty configuration
+
+6) Nothing is working - "aaaahhhhhh"
+
+Don't panic. Use EC2 Instance Connect from the next lecture. Make sure you started an Amazon Linux 2 and you will be able to follow along with the tutorial :)
+
+7) I was able to connect yesterday, but today I can't
+
+This is probably because you have stopped your EC2 instance and then started it again today. When you do so, the public IP of your EC2 instance will change. Therefore, in your command, or Putty configuration, please make sure to edit and save the new public IP.
+
+
+EC2 Instance Purshasing Options:
+================================
+
+ . EC2 reserved instances 
+
+ . EC2 Savings Plans
+
+ . EC2 Spot Instances ===> can get discount of up to 90% compared to On-demand; you define a max for the price and you get the instance running while the current price is < to the max you defined,
+
+ but the max price goes under the current price your instance is stopped. really important to understand a spot request. when you define a request spot, it looks like this:
+    maximum price
+    Desired number of instances
+    Launch specification (iam and so one)
+    request type: one-time reqest (as soon your request is fulfilled your instance is lunched and your request goes away because it's set for one time  ) | persistent request valid fromn valid untill ( this one is set to be re launched untill beeing deleted to stop the request)
+    
+ how can we terminate a spot request? 
+
+ you can only cancel Spot instance requests that are open, active or disabled. but when you terminate a spot request it's not going to stop the instance for you, so you have to do it by  yourself,
+ it'ss not aws job. 
+ the right order to defintly terminate a spot request is to first stop the spot request and then stop or remove the instance. 
+
+ spot fleet = set of spot instances + optional on demand instances. This is the must must for saving money, because it applys a strategy of lowesprice which means: from the pool with the lowest price 
+ ==========
+    you can set 4 strategies depending on you need ==> lowestPrice, diversified, capacityOptimized, priceCapacityOptimized (recommanded, because it's a pool with highest Capacity combinded with the pool with the lowest price and this the best choice for most workload)
+    To summarise let's say spot fleets allows us to automatically request Spot Instances with the lowest price.
+
+ EC2 dedicated Hosts
+
+ EC2 Dedicated Instances ==> instances run on hardware that's dedicated to you; may share hardware with other instances in same account; No control over instance placement
+
+ EC2 Capacity Reservations
+
+
+Which purshasing option is right for me?
+
+On demand: coming and staying in resort whenerver you like, we pay the full price 
+
+Reserved: like planning ahead and if we plan to stay  for a long time, we may get a good discount 
+
+Savings plans: pay a certain amount per hour for certain period and stay in any room type 
+
+spot instances: the hotel allows poeple to bid for the empty rooms and the highest bidder keeps the rooms. You can get kicked out at any time 
+
+dedicated hosts: we book an entire building of the resort 
+
+Capacity Reservation: you book a room for a period with full price even you don't stay in it
+
+
+Networking and seurity:
+=======================
+Placement groups:
+ENI:
+EIP:
+
+EC2 Hibernate:
+(not more than 60 days)
+
+
+EC2 INSTANCE STORAGE:
+=====================
+
+EBS: Elasic Bloc STORE  : it's a network drive you can attach to your instance while they run
+Think of them as network USB stick 
+
+
+EFS:
+===
+Elastic File system ==> it's NFS managed with high perfomance, high Availabity and can be set for multiple AZ and on multiple EC2 at the same time. Notice that it's only Available for Linux and not for Window
+
+according to the perfomance, we have:
+        troughput mode: 
+                        - Bursting
+                        - Elastic (recommanded)
+                        - Provisioned 
+
+        perfomance mode:
+                        - General purpose (recommanded)
+                        - Max I/O
+
+let's make a kick comparaison between EBS and EFS
+
+        EBS volumes:
+            one instance (except multi attach io |/io2)
+            are locked at the AZ level (which means you can't attach it troughout multiple zone on many instance). by using EBS, the only way to move from one az to another is
+            by taking a snapshot and then create a new volume towards another AZ. when you delete your instance, the root volume will be deleted and the ebs volume type will not be deleted.
+            ; also the "Delete on termination" is disabled by default. When creating EC2 instances, you can only use the following EBS volume types as boot volumes: gp2, gp3, io1, io2, and Magnetic (Standard)
+        
+        EFS volumes
+
+            mounting 100s s instances accross AZ 
+            EFS share website files (Wordpress)
+            Only for linux Instances (POSIX)
+            EFS has a higher price point than EBS
+            can leverage EFS-IA for cost saving 
+     
+High Availabity and Scalability:
+===============================
+
+we have two kind of Scalability 
+                                - vertical Scalability ==> this technik allows to improve the perfomance of the instance by upgrading the type for instance from t2.micro to t2.medium
+                                - horizontal Scalability (= scale out/in)==> this technik allows to increase (out means up and in means down) the number of instances for instance...
+
+high Availabity: usually goes hand in hand with horizontal scaling
+        high Availabity means you run your application in at least 2 data centers (== AZ)
+        high Availabity can be passive (for RDS Multi AZ for example)
+        the high Availabity can be active (for horizontal scaling)
+Load balancing:
+===============
+ loads balancer are servers that forward traffic to multiple servers (eg, EC instances) downstream
+ it allows the following:
+ spread load accross multiple downstream 
+ Expose a single point of access (DNS) to your application
+ Seamlessly handle faillure of downstream instances 
+ provide ssl termination https for your website
+ enforce stickness wwith cookies
+ high Availabity accross zone 
+ separate oublic traffic from provate traffic 
+
+Elastic load balancer is a managed load balancer 
+
+now let's talk about the load balancers out there:
+        - Application Load Balancer (v2)
+                routing tables to different targert groups
+                routing based on hostname in url (one.example.com & other.example.com)
+                routing based on Query String Headers
+        - ALB are great fit micro services & containers-based application (example: Docker & Amazon ECS) 
+
+RDS (Relational Data base service):
+====
+RDS is a managed DB  service for DB  use SQL  as query language 
+it allows you to create DB in the cloud and managed by AWS. DB such as:
+Postgres
+MySQL
+MariaDB
+Oracle
+Microsoft SQL servers
+Aurora
+
+    RRDS Storage helps you to increase storage on your RDS DB instance dynamically 
+    when RDS detects you are running out of free database storage, it scales automatically
+
+    - RDS read replicas ==> is set to allow you to scale your read, we can crate up to 15 read replicas 
+    - RDS Multi AZ (Disaster Recorvery)
+
+
+Amazon RDS Proxy:
+    Fully managed proxy for RDS
+    Allows apps to pool and share DB connections established with the database
+    Improving database efficiency by reducing the stress on the database  resouces (e.g., CPU RAM) and minimize open connections (and timeouts)
+    Serveless, autoscaling, highly Available (multi AZ)
+    reduced RDS & Aurora failover time bu up to 66% 
+    support RDS (MySQL, PostgresSQL,MariaDB,MSSQL, server) and Aurora (MySQL, PostgresSQL)
+    no code changes required for most apps 
+    Enforce IAM Authentication for DB, and securely store credentials in AWS secrets Manager
+    RDS Proxy is never publicly accessible (must be accessed from VPC)
+
+Amazon Elasic Cache:
+    
+
+Amazon Elasic Cache - cache security:
+
+
+Important ports:
+
+FTP: 21
+
+SSH: 22
+
+SFTP: 22 (same as SSH)
+
+HTTP: 80
+
+HTTPS: 443
+
+vs RDS Databases ports:
+
+PostgreSQL: 5432
+
+MySQL: 3306
+
+Oracle RDS: 1521
+
+MSSQL Server: 1433
+
+MariaDB: 3306 (same as MySQL)
+
+Aurora: 5432 (if PostgreSQL compatible) or 3306 (if MySQL compatible)
+
+
+
+ROUTE 53:
+========
+DNS termonologies
+
+http://api.wwww.example.com.
+            . ==> root
+            .com ==> top level domain name
+            .example.com ==> second level domain name
+            .www.example.com ==> sub domain
+            api.www.example.com  ==> FQDN
+            http ==> Protocol
+
+the ROOT DNS Server is managed by ICANN
+
+the TLD DNS Server is managed by Branch of ICANN
+
+the SLD DNS Server is managed by Domain Registrar (e.g., Amazon Registrar, INC) 
+
+to get back a reponse for curl www.exmaple.com, the process goes trough al these DNS Serveless
+
+
+
+Really important commands: 
+
+    command to enable MFA delete ===> aws s3api put-bucket-versioning --bucket herve-demo-s3 --versioning-configuration Status=Enabled,MFADelete=Enabled --mfa "arn:aws:iam::045669578164:mfa/myiphone 726193 " --profile root-mfa-delete-demo
+
+    command to disable MFA delete == > aws s3api put-bucket-versioning --bucket herve-demo-s3 --versioning-configuration Status=Enabled,MFADelete=Disabled --mfa "arn:aws:iam::045669578164:mfa/myiphone 726193 " --profile root-mfa-delete-demo
+
+
+
+AWS Cloudfront:
+
+Cloudfront is Content delivery Network (CDN)
+
+    it improves read perfomance, content is cached at the edge 
+    improves users experience
+    216 poiunt of presence globally (egde location)
+    DDoS protection (because worldwide), integration with Shield, AWS Web Application firewall
+
+
+Edge location: is the location where data are stored as cache in order to accelarate the request response to the client. So when the client issues a request, it goes first to the edge location 
+and if the edge location doesn't have the response in cache it goes to the origin bucket to get to response before getting back to the client, so the next time another same request will be sent, the 
+edge location will respond right away.
+
+
+AWS ECS ECR EKS Fargate:
+
+ECS: Amazon Elastic Container Service ( this the management service of container from Amazon)
+we have two kind of launch type for ECS ==> EC2 Launch type and Fargate launch type.
+
+for the EC2 Launch type ===>  when you launsh a docker container on AWS it launchs ECS Tasks on ECS cluster. ECS Cluster is a bunch of instances to 
+create a cluster. each EC2 instance which is part of the cluster will lunch a ECS  Agent to register in the cluster. for this kind of launch you
+must provison & maintain the infrastructure (the EC2 Instances). AWS takes care of starting and stopping containers.
+
+
+the Fargate launch type ==> here when you laucnh a docker container you do not provison the infrastructure. it's all serveless.
+for the fargate, you just create your task and you're good, nothing to manage, aws just create task for you based on the cpu/ram 
+you need. this is the easiest one.
+
+Amazon ECS - IAM Role for ECS ( 2 types of role)
+. EC2 instances profile (EC2 laucnh type only)
+    . used by the ECS  agent 
+    . makes API call to ECS service
+    . send container logs to cloudWatch logs
+    . pull docker image from ECR 
+    . Reference sensitive data in Secrets Manager or SSM Paramater Store
+. ECS Task Role 
+    . Allows each task to have a specific role 
+    . Use different roles for the different ECS  Services you run 
+    . Task Role is defined in the definition
+         to remind:
+           Q==>   You have an application hosted on an ECS Cluster (EC2 Launch Type) where you want your ECS tasks to upload files to an S3 bucket.
+                  Which IAM Role for your ECS Tasks should you modify?
+           R==>   ECS Task Role is the IAM Role used by the ECS task itself. 
+                  Use when your container wants to call other AWS services like S3, SQS, etc.
+              
+
+the ulitimate combo will be to launch an ECS fargate and you use EFS   for the volume persistent. 
+Fargate + EFS = Serveless
+use case: persistent multi AZ shared storage for your containers. 
+
+Note: Amazon s3 can not be mounted as file system on your ECS taks 
+
+EC2 laucnh type - Auto scaling EC2 instances 
+
+. Accommodate ECS services Scaling by adding underlying EC2 Instances 
+
+. Auto Scaling Group Scaling 
+    . Scale your ASG based on CPU Utilization 
+    . Add EC2 instances over time 
+
+ECS Cluster Capacity Provider 
+
+    . Used automatically provision and scale the infrastructure for your ECS Tasks 
+    . Capacity Provider paired with an auto scaling group 
+    . Add EC2 instances when you're missing Capacity (CPU RAM ...)
+
+
+ECS tasks invoked by Event Bridge 
+we can do a lot with Amazon event bridge to preocess events from, into or inside our ecs tasks or our ecs cluster 
+
+
+
+EKS: Amazon Elasic Kubernetes Service 
+
+  let's talk about Amazon EKS Data volumes. 
+        . need to specify storageClass Manifest on your EKS  cluster 
+        . Leverage a container storage interface (CSI) compliant driver 
+        . support for:
+            Amazon EBS 
+            Amazon EFS (works with Fargate)
+            Amazon FSx for NetApp ONTAPP 
+       
+
+ECR: Amazon Elastic Container Registry 
+
+
+AWS App Runner service:
+
+fully managed service that makes it easy to deploy web applications and APIs at scale 
+No infrastructure experience required 
+start with your source code or container image 
+automatically builds and deploy the web app 
+
+
+good_to_know:
+Q - You're planning to migrate a WordPress website running on Docker containers from on-premises to AWS. 
+You have decided to run the application in an ECS Cluster, but you want your docker containers to access 
+the same WordPress website content such as website files, images, videos, etc. What do you recommend to achieve this?
+R: EFS volume can be shared between different EC2 instances and different ECS Tasks. 
+It can be used as a persistent multi-AZ shared storage for your containers.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
